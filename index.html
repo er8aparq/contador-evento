@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuenta regresiva</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        /* Fondo con TU imagen */
+        background-image: url('logo.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+  /* Capa superior que da el efecto de vitral clásico */
+    .vitral {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(3px) contrast(1.3) saturate(1.8);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Marco oscuro estilo bordes de vitral */
+    .vitral::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(90deg, rgba(0,0,0,0.3) 2px, transparent 2px),
+            linear-gradient(0deg, rgba(0,0,0,0.3) 2px, transparent 2px);
+        background-size: 60px 60px;
+        mix-blend-mode: multiply;
+        opacity: 0.35;
+    }
+ .overlay {
+        position: relative;
+        z-index: 10;
+        background: rgba(255,255,255,0.55);
+        backdrop-filter: blur(6px);
+        padding: 30px 50px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.35);
+    }
+
+    #countdown {
+        font-size: 2.4rem;
+        font-weight: bold;
+        color: #000;
+    }
+
+    h1 {
+        margin-bottom: 15px;
+        font-size: 1.8rem;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="vitral"></div>
+
+<div class="overlay">
+<h1>Cuenta regresiva al evento</h1>
+    <div id="countdown"></div>
+</div>
+
+<script>
+    // Fecha objetivo: Sábado 20 de diciembre, 10:00 a.m. (CDMX)
+    const eventDate = new Date("December 20, 2025 10:00:00 GMT-6");
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = eventDate - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").innerHTML = "¡El evento ha comenzado!";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+document.getElementById("countdown").innerHTML =
+            days + " días " +
+            hours + " horas " +
+            minutes + " min " +
+            seconds + " seg ";
+    }
+
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
